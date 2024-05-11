@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+    <websocket:handlers>
+        <websocket:mapping handler="echoHandler" path="/echo-ws"/>
+        <websocket:mapping handler="chatHandler" path="/chat-ws"/>
+        <!-- SockJs 서버 지원 -->
+<!--        <websocket:sockjs />-->
+    </websocket:handlers>
+    <bean id="echoHandler" class="ws.EchoHandler"/>
+    <bean id="chatHandler" class="ws.ChatWebSocketHandler"/>
+    <mvc:default-servlet-handler/>
+</beans>

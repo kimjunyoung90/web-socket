@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>에코</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+           $('#connect').click(function() { connect(); });
+           $('#sendBtn').click(function() { sendMessage(); });
+           $('#close').click(function() { close(); });
+        });
+
+        let wsocket;
+
+        function close() {
+            wsocket.close();
+        }
+
+        function connect() {
+            wsocket = new WebSocket("ws://localhost:8080/echo-ws");
+            wsocket.onmessage = onMessage;
+            wsocket.onclose = onClose;
+            wsocket.onopen = function () {
+                alert("연결되었습니다.");
+            }
+        }
+        function sendMessage() {
+            wsocket.send($('#message').val());
+        }
+        function onMessage(evt) {
+            const data = evt.data;
+            alert("서버에서 데이터 받음:" + data);
+        }
+        function onClose(evt) {
+            alert("연결 끊김");
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="message">
+    <input type="button" id="connect" value="연결">
+    <input type="button" id="sendBtn" value="전송">
+    <input type="button" id="close" value="종료">
+</body>
+</html>
